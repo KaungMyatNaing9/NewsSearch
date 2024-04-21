@@ -6,7 +6,7 @@
 import scrapy
 
 
-class NewsCrawlerItem(scrapy.Item):
+class NewsItem(scrapy.Item):
     title = scrapy.Field()
     author = scrapy.Field()
     publication_date = scrapy.Field()

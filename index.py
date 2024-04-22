@@ -3,7 +3,7 @@ import re
 import pickle
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from gensim.models import Word2Vec
+
 import faiss
 
 # Function to preprocess text

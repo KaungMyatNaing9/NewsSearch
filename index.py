@@ -1,67 +1,64 @@
 import json
-import re
-import pickle
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import pickle
+import re
+from flask import Flask, request, jsonify
 
-import faiss
-
-# Function to preprocess text
 def preprocess_text(text):
-    text = re.sub(r'<[^>]+>', '', text)  # Remove HTML tags
-    text = text.lower()  # Lowercase text
+    # Simple text cleaning and normalization
+    text = re.sub(r'<[^>]*>', '', text)  # Remove HTML tags
+    text = re.sub(r'[\W]+', ' ', text.lower())  # Remove non-words and convert to lower case
     return text
 
-# Load documents from Scrapy output
+# Load and preprocess the documents
 with open('output.json', 'r') as file:
     data = json.load(file)
-documents = [item['content'] for item in data]
-preprocessed_documents = [preprocess_text(doc) for doc in documents]
+documents = [preprocess_text(item['content']) for item in data]
 
 # Create the TF-IDF model and matrix
 vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(preprocessed_documents)
+tfidf_matrix = vectorizer.fit_transform(documents)
 
-# Save the TF-IDF model and matrix
-with open('tfidf_model.pkl', 'wb') as f:
+# Save the objects for later use in the Flask app
+with open('tfidf_vectorizer.pkl', 'wb') as f:
     pickle.dump(vectorizer, f)
 with open('tfidf_matrix.pkl', 'wb') as f:
     pickle.dump(tfidf_matrix, f)
 
-# Train a Word2Vec model
-sentences = [doc.split() for doc in preprocessed_documents]  # Tokenization
-word2vec_model = Word2Vec(sentences, vector_size=100, window=5, min_count=2, sg=1)
+def search(query, top_k=5):
+    # Load saved model and matrix
+    with open('tfidf_vectorizer.pkl', 'rb') as f:
+        vectorizer = pickle.load(f)
+    with open('tfidf_matrix.pkl', 'rb') as f:
+        matrix = pickle.load(f)
 
-# Transform documents to average Word2Vec vectors
-def document_vector(doc):
-    words = doc.split()
-    word_vectors = [word2vec_model.wv[word] for word in words if word in word2vec_model.wv.key_to_index]
-    if len(word_vectors) > 0:
-        return np.mean(word_vectors, axis=0)
-    else:
-        return np.zeros(100)
+    # Transform the query to the same dimension as the TF-IDF matrix
+    query_vec = vectorizer.transform([query])
+    # Calculate cosine similarity
+    similarity = cosine_similarity(query_vec, matrix).flatten()
 
-doc_vectors = np.array([document_vector(doc) for doc in preprocessed_documents])
+    # Get top K indices sorted by highest similarity scores
+    top_indices = np.argsort(similarity)[-top_k:][::-1]
+    results = [{'index': int(idx), 'score': float(similarity[idx])} for idx in top_indices]
 
-# Index vectors using FAISS
-d = 100  # Dimension of vectors
-index = faiss.IndexFlatL2(d)  # Build the FAISS index
-index.add(doc_vectors.astype('float32'))  # Add vectors to the index
+    return results
 
-# Save the Word2Vec model and FAISS index
-word2vec_model.save("word2vec.model")
-faiss.write_index(index, "faiss_index.idx")
+app = Flask(__name__)
 
-# Function to search in the index
-def search(query, use_word2vec=False):
-    if use_word2vec:
-        query_vector = document_vector(preprocess_text(query))
-        query_vector = np.array([query_vector]).astype('float32')
-        distances, indices = index.search(query_vector, k=10)  # Search the FAISS index
-    else:
-        query_vector = vectorizer.transform([query])
-        cosine_similarities = (query_vector * tfidf_matrix.T).toarray()[0]
-        indices = np.argsort(cosine_similarities)[-10:][::-1]
-        distances = cosine_similarities[indices]
-    return indices, distances
+@app.route('/search', methods=['POST'])
+def handle_search():
+    try:
+        data = request.get_json()
+        query = data['query']
+        if not query:
+            return jsonify({'error': 'Empty query provided'}), 400
+        
+        results = search(query)
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+if __name__ == '__main__':
+    app.run(debug=True)

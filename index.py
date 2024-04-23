@@ -47,8 +47,8 @@ def search(query, top_k=10):
 @app.route('/')
 def home():
     return '''
-    <h1>Search API</h1>
-    <p>Use this API by sending a POST or GET request to /search with a query.</p>
+    <h1>Search from WiKi</h1>
+    <p>Please type the thing you wanted to search!!</p>
     <form action="/search" method="post">
         <input type="text" name="query" placeholder="Enter search query" required>
         <input type="submit" value="Search">

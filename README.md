@@ -102,7 +102,11 @@ The source code for the Flask-Based Wikipedia Text Search System is meticulously
 
 ## Bibliography
 [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/) <br/>
-[Scrapy Documentation] (https://docs.scrapy.org/en/latest/) <br/>
+[Scrapy Documentation](https://docs.scrapy.org/en/latest/) <br/>
+Manning, Christopher D., Prabhakar Raghavan, and Hinrich Schütze. Introduction to Information Retrieval. Cambridge: Cambridge University Press, 2008. <br/>
+Croft, W. Bruce, Donald Metzler, and Trevor Strohman. Search Engines: Information Retrieval in Practice. Pearson Education, Inc., 2015. <br/>
+<br/>
+Open AI Chat Gpt also helps me with installations and set up when I have errors!
 
 
 

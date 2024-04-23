@@ -59,5 +59,37 @@ Then follow Step 4 from above if it works for you now! <br/>
 <br/>
 The above steps just used already generated wiki crawl data and process the indexing and flask, if you want different data or more data the you need to modify the crafting code a bit and train it by:
 ```
+cd wiki_crawler
+cd wiki_crawler
+scrapy crawl wiki -o output2.json
+```
+This will give you a output2.json file in spyder directory, you can copy or cut this file and paste it in the same page or directory with index.py . Then run the index.py and you will get something different!
+
+## Conclusion
+The Flask-Based Wikipedia Text Search System has been successfully implemented and operates effectively under current conditions. The system reliably crawls Wikipedia, indexes the content using TF-IDF, and serves this content through a responsive Flask application. However, while the backend operations run smoothly, the frontend user interface requires further development to enhance user engagement and usability.<br/>
+<br/>
+Current search functionality, while operational, shows limitations in data accuracy and retrieval precision. This stems partly from the inherent challenges in the depth and breadth of data collected during the crawling process, which affects the comprehensiveness of the search results. Additionally, the search algorithm's effectiveness is occasionally hindered by the simplistic nature of the TF-IDF approach, which may not always capture the nuances of language used in queries and documents.
+### Future improvements
+1. Enhancing the Frontend: A more dynamic and aesthetically pleasing interface should be developed, possibly using frameworks like React or Vue.js to provide a more interactive experience. <br/>
+2. Refining Data Collection: Improving the crawler's capability to parse and filter data more effectively will help in gathering more relevant and diverse datasets. Utilizing more sophisticated natural language processing techniques could also enhance the system’s understanding of the content. <br/>
+3. Upgrading Search Algorithms: Incorporating more advanced search algorithms such as BM25 or even neural network-based approaches could significantly improve search accuracy and relevance.<br/>
+### Caveats and Cautions:
+The current system, while functional, should be used with the understanding that the data and search results might not cover all potential Wikipedia content comprehensively. Users should also be cautious about the potential for outdated information if the crawler's schedule is not maintained rigorously.<br/>
+In conclusion, the project has laid a solid foundation for a powerful educational and research tool, with ample room for enhancements that could address current shortcomings and elevate the overall effectiveness and user satisfaction.
+
+## Data 
+The primary source of data for the Flask-Based Wikipedia Text Search System is Wikipedia, specifically targeting various thematic content pages to ensure a broad yet relevant data collection. The data is sourced dynamically using a Scrapy crawler, which navigates through predefined Wikipedia content pages to gather articles, summaries, and metadata. This approach ensures that the system captures up-to-date information directly from Wikipedia, reflecting the latest content available on the site.
+Some start URLs:
+```
+https://en.wikipedia.org/wiki/Wikipedia:Contents/People_and_self
+https://en.wikipedia.org/wiki/Wikipedia:Contents/Technology_and_applied_sciences
+https://en.wikipedia.org/wiki/Wikipedia:Good_articles
+https://en.wikipedia.org/wiki/Wikipedia:Contents/Natural_and_physical_sciences
+https://en.wikipedia.org/wiki/Wikipedia:Contents/History_and_events
+```
+The Max Length is set to 3 and Max page is set to 300!
+
+## Source Code
+
 
 

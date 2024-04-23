@@ -1,4 +1,6 @@
 # Search
 
 ## Abstract
-This project aimed to develop a Flask-based web application that enables efficient searching through a corpus using TF-IDF scoring and cosine similarity. The objectives were to provide a simple yet effective search interface and return relevant search results quickly and accurately. The next steps involve implementing advanced text processing features, enhancing the user interface, and optimizing the system for scalability and security.
+This project develops a text search system using Flask, integrating web crawling, data indexing, and query processing capabilities. The objective is to provide a robust and efficient search tool for Wikipedia articles. The next steps involve implementing advanced text processing features, enhancing the user interface, and optimizing the system for scalability and security.
+
+

@@ -15,3 +15,11 @@ The architecture of the Flask-Based Wikipedia Text Search System is structured a
 ## Operation
 To begin, clone the repository from GitHub using the command:
 ```
+git clone https://github.com/KaungMyatNaing9/NewsSearch.git
+```
+Then in your terminal or command prompt cd to the file that you have already cloned by:
+```
+cd NewsSearch
+or search for the file that you have clone and write the file address
+cd file address
+```

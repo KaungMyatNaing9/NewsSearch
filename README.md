@@ -90,6 +90,9 @@ https://en.wikipedia.org/wiki/Wikipedia:Contents/History_and_events
 The Max Length is set to 3 and Max page is set to 300!
 
 ## Source Code
+The source code for the Flask-Based Wikipedia Text Search System is meticulously organized in a public GitHub repository, allowing users to download, examine, and contribute to the project. Here is a breakdown of the repository's contents and their respective roles:<br/>
+`gensim_env/`: This directory likely contains the virtual environment setup for the project, ensuring dependencies are isolated and managed without impacting system-wide Python packages.(This package was not important because I dont use word2vec in my last version) <br/>
+`venv/`: Similar to `gensim_env/`, this is another virtual environment setup, which underscores the project's emphasis on reproducible environments for consistent operation across different setups. Most of the required library and packages are downloaded here.
 
 
 

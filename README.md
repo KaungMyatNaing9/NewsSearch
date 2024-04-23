@@ -43,6 +43,7 @@ Step 5: If this appear go to the website it said which is:
 http://127.0.0.1:5000
 ```
 You will see the search bar there and you can try to test it. After you type something and click search it will give you 10 closest wikipedia pages with their index,score and url. Copy paste the url and it will go to the page you want to search. <br/>
+<br/>
 Error Step 1: If the above doesnt work for you,lets try using virtual environment, type in terminal:
 ```
 For window:
@@ -55,5 +56,8 @@ Error Step 2 : Then try:
 python index.py
 ```
 Then follow Step 4 from above if it works for you now! <br/>
-The above steps just used already generated wiki crawl data and process the indexing and flask, if you want different data or more data the you need to modify the crafting code a bit and train it again.
+<br/>
+The above steps just used already generated wiki crawl data and process the indexing and flask, if you want different data or more data the you need to modify the crafting code a bit and train it by:
+```
+
 
